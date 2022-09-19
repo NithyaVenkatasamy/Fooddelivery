@@ -12,14 +12,31 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.id = id;
+
+    }
+
+    public User(String username, String password, String firstName, String lastName) {
+        this.username = username;
+        this.password = password;
+
         this.firstName = firstName;
         this.lastName = lastName;
-        this.emailId = emailId;
-        this.phonenumber = phonenumber;
     }
 
     public User() {
+
+    }
+
+    public User(int id) {
+    }
+
+    public User(int id, String username, String password, String firstName, String lastName) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+
+        this.firstName = firstName;
+        this.lastName = lastName;
 
     }
 
@@ -78,5 +95,18 @@ public class User {
 
     public void setPhonenumber(String phonenumber) {
         this.phonenumber = phonenumber;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", emailId='" + emailId + '\'' +
+                ", phonenumber='" + phonenumber + '\'' +
+                '}';
     }
 }

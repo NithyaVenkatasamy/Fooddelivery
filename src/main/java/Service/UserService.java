@@ -6,6 +6,7 @@ import Models.Order;
 import Models.Purchase;
 import Models.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserService {
@@ -14,36 +15,52 @@ public class UserService {
         ur = new UserRepo();
     }
 
-    public void addUser(int id,String username,String password,String firstname,String lastname){
-       User existingUser = ur.getUserById(id);
-        if(existingUser == null) {
-           User newUser = new User(firstname,lastname);
+    public UserService(UserRepo ur)throws SQLException{
+        this.ur=ur;
+    }
+
+
+    public void addUser(String username,String password,String firstname,String lastname){
+        User newUser = new User(username,password,firstname,lastname);
            ur.addUser(newUser);
-        }
+
+    }
+
+    public User getUserById(int id){
+        return ur.getUserById(id);
+    }
+    public List<User>getAllUsers(){return ur.getAllUsers();}
+
+    public void updateUser(String firstname,String lastname,int id){
+       // User newUser = new User(firstname,lastname);
+        ur.updateUser(firstname,lastname,id);
+    }
+    public void removeUSer(int id){
+       // User newUser = new User(id);
+        ur.removeUser(id);
     }
     public List<MenuItem> getAllMenuItems(){
         return ur.getAllMenuItems();
     }
-    public void addMenuItem(int id,String menuitem,int prize){
-     MenuItem existingMenuItem = ur.getMenuById(id);
-     if(existingMenuItem == null){
-         MenuItem newMenuItem = new MenuItem(id,menuitem,prize);
+    public void addMenuItem(String menuitem,int prize){
+
+         MenuItem newMenuItem = new MenuItem(menuitem,prize);
          ur.addMenuItem(newMenuItem);
-      }
+
     }
     public void updateMenuItem(int id,String menuitem,int prize){
-        MenuItem existingMenuItem = ur.getMenuById(id);
-        if(existingMenuItem == null){
-            MenuItem newMenuItem = new MenuItem(id,menuitem,prize);
-            //ur.updateMenuItem(id,MenuItem);
-        }
+        // MenuItem existingMenuItem = ur.getMenuById(id);
+
+           MenuItem newMenuItem = new MenuItem(menuitem,prize);
+            ur.updateMenuItem(id,menuitem,prize);
+
     }
     public void removeMenuItem(int id){
-        MenuItem existingMenuItem = ur.getMenuById(id);
-        if(existingMenuItem == null){
+       // MenuItem existingMenuItem = ur.getMenuById(id);
+      //  if(existingMenuItem == null){
             MenuItem newMenuItem = new MenuItem(id);
             ur.removeMenuItem(id);
-        }
+      //  }
     }
 
     public List<Purchase> getPurchaseByOrderId(int id){

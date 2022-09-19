@@ -42,4 +42,13 @@ public class Order {
     public void setPurchases(ArrayList<Purchase> purchases) {
         this.purchases = purchases;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", user=" + user +
+                ", purchases=" + purchases +
+                '}';
+    }
 }

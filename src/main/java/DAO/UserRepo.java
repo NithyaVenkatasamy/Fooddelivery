@@ -39,7 +39,7 @@ public class UserRepo {
     }
     public void addUser(User user){
         try{
-            PreparedStatement statement = conn.prepareStatement("insert into users(id,username,password,firstname,lastname)values(?,?,?,?,?);");
+            PreparedStatement statement = conn.prepareStatement("insert into users(username,password,firstname,lastname)values(?,?,?,?);");
 
             statement.setString(1,user.getUsername());
             statement.setString(2,user.getPassword());
@@ -52,13 +52,56 @@ public class UserRepo {
         }
 
     }
+    public List<User>getAllUsers(){
+        List<User>allUsers = new ArrayList<>();
+        try{
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery("select * from  users");
+            while (rs.next()){
+                User loadeduser = new User(rs.getInt("id"),rs.getString("username"),rs.getString("password"),rs.getString("firstName")
+                        ,rs.getString("lastName"));
+                allUsers.add(loadeduser);
+            }
+
+        }catch(SQLException e){
+            e.printStackTrace();
+
+        }
+        return allUsers;
+    }
+    public void updateUser(String firstname,String lastname,int id){
+        try{
+            PreparedStatement statement = conn.prepareStatement("update users \n" +
+                    "set firstname= ?,lastname= ?\n" +
+                    "where users.id=?;");
+            statement.setString(1,firstname);
+            statement.setString(2,lastname);
+            statement.setInt(3,id);
+            statement.executeUpdate();
+
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public void removeUser(int id){
+        try{
+            PreparedStatement statement = conn.prepareStatement("DELETE from users where id = ?");
+            statement.setInt(1,id);
+            statement.executeUpdate();
+
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
     public List<MenuItem>getAllMenuItems(){
         List<MenuItem>allMenuItems = new ArrayList<>();
         try{
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery("select * from menuitems");
             while (rs.next()){
-                MenuItem loadedmenuItem = new MenuItem(rs.getInt("id"),rs.getString("menuitem"), rs.getInt("prize"));
+                MenuItem loadedmenuItem = new MenuItem(rs.getString("menuitem"), rs.getInt("prize"));
                allMenuItems.add(loadedmenuItem);
             }
         }catch(SQLException e){
@@ -90,17 +133,18 @@ public class UserRepo {
             PreparedStatement statement = conn.prepareStatement("insert into menuitems(menuitem,prize)values(?,?)");
             statement.setString(1,menuItem.getMenuitem());
             statement.setInt(2,menuItem.getPrize());
+            statement.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
         }
     }
-    public void updateMenuItem(int id,MenuItem menuItem){
+    public void updateMenuItem(int id,String menuitem,int prize){
     try{
         PreparedStatement statement = conn.prepareStatement("update menuitems set menuitem = ?,prize = ? \n" +
                 "\twhere menuitems.id=?\n");
-        statement.setString(1,menuItem.getMenuitem());
-        statement.setInt(2,menuItem.getPrize());
-        statement.setInt(1,id);
+        statement.setString(1,menuitem);
+        statement.setInt(2,prize);
+        statement.setInt(3,id);
         statement.executeUpdate();
 
     }catch(SQLException e) {

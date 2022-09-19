@@ -27,4 +27,12 @@ public class Purchase {
     public void setOrderid(int orderid) {
         this.orderid = orderid;
     }
+
+    @Override
+    public String toString() {
+        return "Purchase{" +
+                "menuitem=" + menuitem +
+                ", orderid=" + orderid +
+                '}';
+    }
 }

@@ -5,7 +5,7 @@ public class MenuItem {
     private String menuitem;
     private int prize;
 
-    public MenuItem(int id, String menuitem, int prize) {
+    public MenuItem(String menuitem, int prize) {
         this.id = id;
         this.menuitem = menuitem;
         this.prize = prize;
@@ -40,5 +40,14 @@ public class MenuItem {
 
     public void setPrize(int prize) {
         this.prize = prize;
+    }
+
+    @Override
+    public String toString() {
+        return "MenuItem{" +
+                "id=" + id +
+                ", menuitem='" + menuitem + '\'' +
+                ", prize=" + prize +
+                '}';
     }
 }
